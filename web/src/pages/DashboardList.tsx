@@ -9,6 +9,7 @@ import api from "../services/api";
 import Orphanage from "./Orphanage";
 import { useHistory } from "react-router-dom";
 
+
 interface Orphanage {
   id: number;
   latitude: number;
@@ -21,9 +22,9 @@ interface Orphanage {
   images: Array<{ id: number; url: string; }>;
 }
 
-interface OrphanageParams {
-  id: string
-}
+// interface OrphanageParams {
+//   id: string
+// }
 
 interface User {
   id: number,
@@ -40,7 +41,6 @@ export default function DashboardList() {
     api.get('acceptedlist').then(response => {
       setOrphanages(response.data)
     })
-    console.log(history)
   }, [])
 
   

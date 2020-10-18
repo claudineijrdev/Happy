@@ -1,9 +1,10 @@
-import React, { FormEvent, useEffect, useState } from 'react'
+import React, { FormEvent, useState, } from 'react'
 import '../styles/pages/login.css'
 import logoImg from '../images/logo-vertical.svg'
-import { Link, useHistory } from 'react-router-dom'
+import { useHistory } from 'react-router-dom'
 import { FiArrowLeft } from 'react-icons/fi'
 import api from '../services/api'
+import UserContext from '../context/UserContext'
 
 interface User {
      id: number,
@@ -14,28 +15,28 @@ interface User {
 
 function Login() {
      const { goBack, push } = useHistory()
-     const [user, setUser] = useState<User>()
-     // const [name, setName] = useState('')
      const [email, setEmail] = useState('')
      const [password, setPassword] = useState('')
-     // const [token, setToken] = useState('')
+     const [user, setUser] = useState<User>({
+          id: 0,
+          name: '',
+          email: '',
+          token: '',
+
+     })
 
      async function handleLogin(event: FormEvent) {
           event.preventDefault()
-
-          try{
-               const ret = await api.post('auth', {email,password} )
-               console.log( ret.data)
+          try {
+               const ret = await api.post('auth', { email, password })
                setUser(ret.data)
-     
-               push('/dashboard',user)
-          }catch(err){
+               push('/dashboard')
+          } catch (err) {
                alert('Ops! Não conseguimos autenticar seu acesso')
           }
-
-      
      }
      return (
+
           <div id="login-page">
                <div className="content-wrapper">
                     <div className="logo-container">
