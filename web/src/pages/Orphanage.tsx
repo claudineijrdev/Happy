@@ -1,4 +1,4 @@
-import React, { FormEvent, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 // import { FaWhatsapp } from "react-icons/fa";
 import { FiCheck, FiClock, FiInfo, FiXCircle } from "react-icons/fi";
 import { Map, Marker, TileLayer } from "react-leaflet";
@@ -48,7 +48,7 @@ export default function Orphanage() {
     const ret =  await api.patch(`orphanages/approve/${orphanage?.id}/${accepted?1:0}`)
     if(ret.status === 200){
       alert("Operação finalizada com sucesso!")
-      history.push('/app')
+      history.goBack()
     }else{
       alert("Ops! Encontramos um problema: " + ret.statusText)
     }

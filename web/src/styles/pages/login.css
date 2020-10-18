@@ -88,11 +88,14 @@ form.form-login .input-block button {
   margin-top: 50px;
   width: 100%;
   height: 64px;
-  background: #37c77f;
+  background: #37C77F;
   border-radius: 20px;
   border: none;
   color: #ffffff;
   bottom: 0;
+}
+form.form-login .input-block button:hover {
+  background: #3EE08F;
 }
 
 form.form-login h2 {
@@ -113,7 +116,7 @@ form.form-login .checkbox-block-line {
   padding-top: 20px;
   display: flex;
   flex-direction: row;
-  justify-content: start;
+  /* justify-content: start; */
 }
 form.form-login .checkbox-block-line #remember-me {
   width: 24px;
@@ -162,4 +165,9 @@ form.form-login .checkbox-block-line #forgot-password {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+}
+
+
+#login-page .content-wrapper .login-form .go-back-button:hover {
+  background: #d3e2e5;
 }

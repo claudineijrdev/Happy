@@ -85,11 +85,25 @@
   justify-content: space-between;
 }
 
-#page-dashboard .cards-container main .map .map-controlls .map-edit-button{
+#page-dashboard .cards-container main .map .map-controlls .map-look-button{
   position: absolute;
   height: 48px;
   width: 48px;
   right: 75px;
+  top: 20px;
+
+
+  background: #EBF2F5;
+  border-radius: 16px;
+  border: none;
+}
+
+
+#page-dashboard .cards-container main .map .map-controlls .map-edit-button{
+  position: absolute;
+  height: 48px;
+  width: 48px;
+  right: 130px;
   top: 20px;
 
 
@@ -106,6 +120,17 @@
   background: #EBF2F5;
   border-radius: 16px;
   border: none;
+}
+
+
+#page-dashboard .cards-container main .map .map-controlls .map-look-button:hover{
+  background: #d3e2e5;
+}
+#page-dashboard .cards-container main .map .map-controlls .map-edit-button:hover{
+  background: #d3e2e5;
+}
+#page-dashboard .cards-container main .map .map-controlls .map-delete-button:hover{
+  background: #d3e2e5;
 }
 
 .no-content-img{

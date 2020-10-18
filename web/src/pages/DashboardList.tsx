@@ -3,11 +3,11 @@ import { Map, Marker, TileLayer } from "react-leaflet";
 
 import '../styles/pages/dashboard.css';
 import mapIcon from "../utils/mapIcon";
-import { FiEdit3, FiTrash } from "react-icons/fi";
+import { FiEdit3, FiEye, FiTrash } from "react-icons/fi";
 import SidebarDashboard from "../components/SidebarDashboard";
 import api from "../services/api";
 import Orphanage from "./Orphanage";
-import { Link, useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 
 interface Orphanage {
   id: number;
@@ -36,6 +36,10 @@ export default function DashboardList() {
 
   function handleEditNavigation(id: number) {
 
+    history.push(`/orphanages/edit/${id}`)
+  }
+
+  function handleLookNavigation(id: number) {
     history.push(`/orphanages/${id}`)
   }
 
@@ -57,7 +61,7 @@ export default function DashboardList() {
           <div className="map-container">
             {orphanages.map(orphanage => {
               return (
-                <div className="map">
+                <div key={orphanage.id} className="map">
                   <Map
                     key={orphanage.id}
                     center={[orphanage.latitude, orphanage.longitude]}
@@ -78,7 +82,10 @@ export default function DashboardList() {
                   <div className="map-controlls">
                     <p>{orphanage.name}</p>
 
-                    <button type="button" className="map-edit-button" onClick={() => { handleEditNavigation(orphanage.id) }}>
+                    <button type="button"  className="map-look-button" onClick={() => { handleLookNavigation(orphanage.id) }} >
+                      <FiEye size={24} color="#15C3D6" />
+                    </button>
+                    <button type="button"  className="map-edit-button" onClick={() => { handleEditNavigation(orphanage.id) }} hidden>
                       <FiEdit3 size={24} color="#15C3D6" />
                     </button>
                     <button type="button" className="map-delete-button" onClick={() => { handleDeleteNavigation(orphanage.id) }}>

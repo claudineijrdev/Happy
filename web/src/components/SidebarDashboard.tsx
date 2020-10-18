@@ -1,5 +1,5 @@
 import React from 'react'
-import { FiAlertCircle, FiArrowLeft, FiMapPin, FiPower } from 'react-icons/fi'
+import { FiAlertCircle, FiMapPin, FiPower } from 'react-icons/fi'
 import { useHistory } from 'react-router-dom';
 
 import mapMarkerImg from '../images/map-marker.svg';

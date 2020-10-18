@@ -4,7 +4,7 @@ import { Map, Marker, TileLayer } from "react-leaflet";
 import '../styles/pages/dashboard.css';
 import mapIcon from "../utils/mapIcon";
 import noContent from "../images/no-content.svg";
-import { FiArrowLeft, FiArrowRight, FiEdit3, FiTrash } from "react-icons/fi";
+import {  FiArrowRight} from "react-icons/fi";
 import SidebarDashboard from "../components/SidebarDashboard";
 import { useHistory } from "react-router-dom";
 import api from "../services/api";

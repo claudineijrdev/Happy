@@ -21,6 +21,14 @@ aside.app-sidebar main #map-alert-enabled{
   background: #FFD666;
   color: #0089A5
 }
+aside.app-sidebar main #map-alert-disabled:hover{
+  background: #17d6eb;
+  /* color: #0089A5 */
+}
+aside.app-sidebar main #map-pin-disabled:hover{
+  background: #17d6eb;
+  /* color: #0089A5 */
+}
 aside.app-sidebar main button {
   width: 48px;
   height: 48px;
