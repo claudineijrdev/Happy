@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from "react";
-import { FaWhatsapp } from "react-icons/fa";
-import { FiClock, FiInfo  } from "react-icons/fi";
+import React, { FormEvent, useEffect, useState } from "react";
+// import { FaWhatsapp } from "react-icons/fa";
+import { FiCheck, FiClock, FiInfo, FiXCircle } from "react-icons/fi";
 import { Map, Marker, TileLayer } from "react-leaflet";
-import { useParams } from  'react-router-dom'
+import { useHistory, useParams } from 'react-router-dom'
 
 import '../styles/pages/orphanage.css';
 import Sidebar from "../components/Sidebar";
@@ -10,6 +10,7 @@ import mapIcon from "../utils/mapIcon";
 import api from "../services/api";
 
 interface Orphanage {
+  id: number;
   latitude: number;
   longitude: number;
   name: string;
@@ -17,7 +18,10 @@ interface Orphanage {
   instructions: string;
   opening_hours: string;
   open_on_weekends: string;
-  images: Array<{ id:number; url: string; }>;
+  pending: string;
+  accepted: string;
+
+  images: Array<{ id: number; url: string; }>;
 }
 
 interface OrphanageParams {
@@ -25,19 +29,31 @@ interface OrphanageParams {
 }
 
 export default function Orphanage() {
+  const history = useHistory()
   const params = useParams<OrphanageParams>()
   const [orphanage, setOrphanage] = useState<Orphanage>()
   const [activeImageIndex, setActiveImageIndex] = useState(0)
 
-  useEffect(() =>{
-       api.get(`orphanages/${params.id}`).then(response =>{
-           setOrphanage(response.data)
-       })
-  },[params.id])
+  useEffect(() => {
+    api.get(`orphanages/${params.id}`).then(response => {
+      setOrphanage(response.data)
+    })
+  }, [params.id])
 
-  if(!orphanage){
+  if (!orphanage) {
     return <p>Carregando...</p>
   }
+
+  async function handleAcceptationRegistration(accepted: boolean) {
+    const ret =  await api.patch(`orphanages/approve/${orphanage?.id}/${accepted?1:0}`)
+    if(ret.status === 200){
+      alert("Operação finalizada com sucesso!")
+      history.push('/app')
+    }else{
+      alert("Ops! Encontramos um problema: " + ret.statusText)
+    }
+  }
+
 
   return (
     <div id="page-orphanage">
@@ -48,13 +64,13 @@ export default function Orphanage() {
           <img src={orphanage.images[activeImageIndex].url} alt={orphanage.name} />
 
           <div className="images">
-            {orphanage.images.map((image,index) =>{
+            {orphanage.images.map((image, index) => {
               return (
-                <button 
-                  key={image.id} 
-                  className={activeImageIndex === index ? 'active' : ''} 
+                <button
+                  key={image.id}
+                  className={activeImageIndex === index ? 'active' : ''}
                   type="button"
-                  onClick={() =>{
+                  onClick={() => {
                     setActiveImageIndex(index)
                   }}
                 >
@@ -63,15 +79,15 @@ export default function Orphanage() {
               )
             })}
           </div>
-          
+
           <div className="orphanage-details-content">
             <h1>{orphanage.name}</h1>
             <p>{orphanage.about}</p>
 
             <div className="map-container">
-              <Map 
-                center={[orphanage.latitude,orphanage.longitude]} 
-                zoom={16} 
+              <Map
+                center={[orphanage.latitude, orphanage.longitude]}
+                zoom={16}
                 style={{ width: '100%', height: 280 }}
                 dragging={false}
                 touchZoom={false}
@@ -79,10 +95,10 @@ export default function Orphanage() {
                 scrollWheelZoom={false}
                 doubleClickZoom={false}
               >
-                <TileLayer 
+                <TileLayer
                   url={`https://api.mapbox.com/styles/v1/mapbox/light-v10/tiles/256/{z}/{x}/{y}@2x?access_token=${process.env.REACT_APP_MAPBOX_TOKEN}`}
                 />
-                <Marker interactive={false} icon={mapIcon} position={[orphanage.latitude,orphanage.longitude]} />
+                <Marker interactive={false} icon={mapIcon} position={[orphanage.latitude, orphanage.longitude]} />
               </Map>
 
               <footer>
@@ -108,18 +124,31 @@ export default function Orphanage() {
                   fim de semana
                 </div>
               ) : (
-                <div className="open-on-weekends dont-open">
-                  <FiInfo size={32} color="#FF669D" />
+                  <div className="open-on-weekends dont-open">
+                    <FiInfo size={32} color="#FF669D" />
                   Não atendemos <br />
                   fim de semana
-                </div>
-              )}
+                  </div>
+                )}
             </div>
-
-            {/* <button type="button" className="contact-button">
+            {/* 
+            <button type="button" className="contact-button">
               <FaWhatsapp size={20} color="#FFF" />
               Entrar em contato
             </button> */}
+            {orphanage.pending && (
+              <div className="orphanage-footer-approve">
+                <button className="recuse-button" onClick={() => handleAcceptationRegistration(false)} type="submit">
+                  <FiXCircle size={24} />
+                      Recusar
+                  </button>
+                <button className="accept-button" onClick={() => handleAcceptationRegistration(true)} type="submit">
+                  <FiCheck size={24} />
+                    Aceitar
+                  </button>
+              </div>
+
+            )}
           </div>
         </div>
       </main>

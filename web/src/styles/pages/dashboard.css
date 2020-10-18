@@ -1,0 +1,121 @@
+#page-dashboard {
+  display: flex;
+  position: absolute;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+}
+
+#page-dashboard .cards-container {
+  position: absolute;
+  left: 100px;
+  width: 90%;
+  height: 100%;
+  /* background: #FFFFFF;
+  border: 1px solid #D3E2E5;
+  border-radius: 20px; */
+}
+
+#page-dashboard .cards-container header h1 {
+  position: absolute;
+  color: #4d6f80;
+  height: 34px;
+  left: 80px;
+  top: 64px;
+}
+#page-dashboard .cards-container header h2 {
+  position: absolute;
+  color: #4d6f80;
+  height: 34px;
+  right: 80px;
+  top: 64px;
+  font-size: 16px;
+  font-style: normal;
+}
+#page-dashboard .cards-container header {
+  position: relative;
+}
+#page-dashboard .cards-container main hr {
+  margin-top: 130px;
+  margin-left: 90px;
+  width: 90%;
+}
+#page-dashboard .cards-container main .map-container {
+  position: relative;
+  margin-top: 50px;
+  left: 80px;
+  width: 90%;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  /* background: #FFFFFF; */
+}
+
+#page-dashboard .cards-container main .map {
+  width: 544px;
+  height: 309px;
+  margin: 20px;
+  background: #ffffff;
+
+  border: 1px solid #d3e2e5;
+  box-sizing: border-box;
+  border-radius: 20px;
+}
+
+#page-dashboard .cards-container main .map p {
+  position: relative;
+  
+  top: 30px;
+  left: 20px;
+  font-family: Nunito;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 24px;
+  color: #4d6f80;
+}
+
+#page-dashboard .cards-container main .map .map-controlls {
+  position: absolute;
+  /* width: 100%; */
+  width: 544px;
+  height: 80px;
+  display: flex;
+  flex-direction: row;
+  /* background: cyan; */
+  justify-content: space-between;
+}
+
+#page-dashboard .cards-container main .map .map-controlls .map-edit-button{
+  position: absolute;
+  height: 48px;
+  width: 48px;
+  right: 75px;
+  top: 20px;
+
+
+  background: #EBF2F5;
+  border-radius: 16px;
+  border: none;
+}
+#page-dashboard .cards-container main .map .map-controlls .map-delete-button{
+  position: absolute;
+  right: 20px;
+  top: 20px;
+  height: 48px;
+  width: 48px;
+  background: #EBF2F5;
+  border-radius: 16px;
+  border: none;
+}
+
+.no-content-img{
+  /* top: 300px; */
+  position: relative;
+  width: 100%;
+  height: 70vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+}

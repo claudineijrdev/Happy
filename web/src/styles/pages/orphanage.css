@@ -172,3 +172,59 @@
 .orphanage-details .orphanage-details-content button.contact-button:hover {
   background: #36CF82;
 }
+.orphanage-details .orphanage-details-content .orphanage-footer-approve{
+  margin-top: 64px; 
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+.orphanage-details .orphanage-details-content .orphanage-footer-approve button.recuse-button {
+  width: 45%;
+  height: 64px;
+  border: 0;
+  cursor: pointer;
+  background: #FF669D;
+  border-radius: 20px;
+  color: #FFFFFF;
+  font-weight: 800;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  transition: background-color 0.2s;
+}
+
+.orphanage-details .orphanage-details-content .orphanage-footer-approve button.recuse-button:hover {
+  background: #FF568F;
+}
+
+.orphanage-details .orphanage-details-content .orphanage-footer-approve button.recuse-button  svg {
+  margin-right: 16px;
+}
+
+.orphanage-details .orphanage-details-content .orphanage-footer-approve button.accept-button {
+
+  width: 48%;
+  height: 64px;
+  border: 0;
+  cursor: pointer;
+  background: #3CDC8C;
+  border-radius: 20px;
+  color: #FFFFFF;
+  font-weight: 800;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  transition: background-color 0.2s;
+}
+.orphanage-details .orphanage-details-content .orphanage-footer-approve button.accept-button:hover {
+  background: #36CF82;
+}
+
+.orphanage-details .orphanage-details-content .orphanage-footer-approve button.accept-button  svg {
+  margin-right: 16px;
+}
+
