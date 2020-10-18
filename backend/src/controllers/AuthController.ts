@@ -53,9 +53,11 @@ export default {
      async authenticate(request: Request, response: Response) {
           const {
                email,
-               password
+               password,
+               
           } = request.body
-
+          
+          console.log(request.body)
           const userRepository = getRepository(User)
 
           const user = await userRepository.findOne({email: email})

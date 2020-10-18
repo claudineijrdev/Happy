@@ -25,17 +25,27 @@ interface OrphanageParams {
   id: string
 }
 
+interface User {
+  id: number,
+  name: string,
+  email: string,
+  token: string
+}
+
 export default function DashboardList() {
   const history = useHistory()
   const [orphanages, setOrphanages] = useState<Orphanage[]>([])
+  // const [user, setUser] = useState<User>(history.)
   useEffect(() => {
     api.get('acceptedlist').then(response => {
       setOrphanages(response.data)
     })
+    console.log(history)
   }, [])
 
-  function handleEditNavigation(id: number) {
+  
 
+  function handleEditNavigation(id: number) {
     history.push(`/orphanages/edit/${id}`)
   }
 
