@@ -15,6 +15,7 @@ export default{
 
           return response.json(orphanageView.renderMany(orphanages))
      },
+     
      async show(request: Request, response: Response){
           const { id } = request.params
           const orphanagesRepository = getRepository(Orphanage)
@@ -22,6 +23,49 @@ export default{
           const orphanage = await orphanagesRepository.findOneOrFail(id, {
                relations: ['images']
           })
+
+          return response.json(orphanageView.render(orphanage))
+     },
+     async delete(request: Request, response: Response){
+          const { id } = request.params
+          const orphanagesRepository = getRepository(Orphanage)
+
+          const orphanage = await orphanagesRepository.delete(id)
+
+          return response.json({"msg":"removido com sucesso"} )
+     },
+     async getAcceptedList(request: Request, response: Response){
+          const orphanagesRepository = getRepository(Orphanage)
+
+          const orphanages = await orphanagesRepository.find({
+              where:  [{accepted:  "1"}],
+               relations: ['images']
+          })
+
+          return response.json(orphanageView.renderMany(orphanages))
+     },
+     async getPendingList(request: Request, response: Response){
+          const orphanagesRepository = getRepository(Orphanage)
+
+          const orphanages = await orphanagesRepository.find({
+              where:  [{pending:  "1"}],
+               relations: ['images']
+          })
+
+          return response.json(orphanageView.renderMany(orphanages))
+     },
+
+     async accept(request: Request, response: Response){
+          const { id, accepted } = request.params
+          // console.log(request.params)
+          const orphanagesRepository = getRepository(Orphanage)
+
+          const orphanage = await orphanagesRepository.findOneOrFail(id, {
+               relations: ['images']
+          })
+          if (orphanage){
+               const ret =  await orphanagesRepository.update(id, {accepted : accepted === '1', pending: false})
+          }
 
           return response.json(orphanageView.render(orphanage))
      },
@@ -34,7 +78,9 @@ export default{
                about,
                instructions,
                opening_hours,
-               open_on_weekends
+               open_on_weekends,
+               pending,
+               accepted
           } = request.body
 
           const orphanageRepository = getRepository(Orphanage)
@@ -52,6 +98,8 @@ export default{
                instructions,
                opening_hours,
                open_on_weekends: open_on_weekends === 'true',
+               pending: pending === 'true',
+               accepted: accepted === 'true',               
                images
           }
 
@@ -63,6 +111,8 @@ export default{
                instructions: Yup.string().required(),               
                opening_hours: Yup.string().required(),               
                open_on_weekends: Yup.boolean().required(),
+               pending: Yup.boolean().required(),
+               accepted: Yup.boolean().required(),
                images: Yup.array(Yup.object().shape({
                     path: Yup.string().required()
                }))               

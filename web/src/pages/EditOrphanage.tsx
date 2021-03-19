@@ -1,4 +1,4 @@
-import React, { ChangeEvent, FormEvent, useState } from "react";
+import React, { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import { Map, Marker, TileLayer } from 'react-leaflet';
 import { LeafletMouseEvent } from 'leaflet'
 import { FiPlus } from "react-icons/fi";
@@ -8,10 +8,29 @@ import Sidebar from "../components/Sidebar";
 import mapIcon from "../utils/mapIcon";
 // import { isRegularExpressionLiteral } from "typescript";
 import api from "../services/api";
-import { useHistory } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 
 
-export default function CreateOrphanage() {
+interface Orphanage {
+  id: number;
+  latitude: number;
+  longitude: number;
+  name: string;
+  about: string;
+  instructions: string;
+  opening_hours: string;
+  open_on_weekends: string;
+  pending: string;
+  accepted: string;
+
+  images: Array<{ id: number; url: string; }>;
+}
+
+interface OrphanageParams {
+  id: string
+}
+
+export default function EditOrphanage() {
   const history = useHistory()
   const [position, setPosition] = useState({ latitude: 0, longitude: 0})
   const [name, setName] = useState("")
@@ -21,11 +40,11 @@ export default function CreateOrphanage() {
   const [open_on_weekends, setOpenOnWeekends] = useState(true)
   const [images, setImages] = useState<File[]>([])
   const [previewImages, setPreviewImages] = useState<string[]>([])
-
+  const params = useParams<OrphanageParams>()
+  const [orphanage, setOrphanage] = useState<Orphanage>()
 
   function handleMapClick (event: LeafletMouseEvent) {
       const {lat, lng} = event.latlng
-
       setPosition({
         latitude: lat,
         longitude: lng,
@@ -44,16 +63,14 @@ export default function CreateOrphanage() {
     data.append('instructions',instructions)
     data.append('opening_hours',opening_hours)
     data.append('open_on_weekends',String(open_on_weekends))
-    data.append('pending','true')
-    data.append('accepter','false')
 
     images.forEach(image => {
       data.append('images',image)
     });
     
     await api.post('orphanages', data)
-    // alert('Cadastro realizado com sucesso!')
-    history.push('/success')
+    alert('Cadastro realizado com sucesso!')
+    history.push('/app')
   }
 
   function handleSelectImages(event: ChangeEvent<HTMLInputElement>){
@@ -68,13 +85,24 @@ export default function CreateOrphanage() {
     setPreviewImages(selectedImagesPreview)
   }
 
+  useEffect(() => {
+    api.get(`orphanages/${params.id}`).then(response => {
+      setOrphanage(response.data)
+
+    })
+  }, [params.id])
+
+  if (!orphanage) {
+    return <p>Carregando...</p>
+  }
+
   return (
     <div id="page-create-orphanage">
       <Sidebar />
       <main>
         <form onSubmit={handleSubmit} className="create-orphanage-form">
           <fieldset>
-            <legend>Dados</legend>
+            <legend>Dados - Edição</legend> 
 
             <Map        
               center={[-26.8743763,-48.697435]} 
